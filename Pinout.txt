@@ -1,0 +1,44 @@
+-----------------------------------------------
+Curing Cabinet Arduino Mega Pinout
+-----------------------------------------------
+
+1. 4-Digit 7-Segment Displays (DIYables / 74HC595)
+---------------------------------------------------
+Function               | Arduino Pin | Notes
+-----------------------|------------|----------------------------
+Shift Clock (SCLK)     | 9          | Connect to 74HC595 SHCP
+Latch Clock (RCLK)     | 10         | Connect to 74HC595 STCP
+Temperature Data       | 11         | TEMP_DIO → SER on temp display
+Humidity Data          | 12         | HUM_DIO → SER on humidity display
+
+2. Rotary Encoders
+------------------
+Temperature Encoder
+CLK                    | 22         | Clock pin
+DT                     | 23         | Data pin
+Switch (push)          | 24         | Normally HIGH, INPUT_PULLUP
+
+Humidity Encoder
+CLK                    | 25         | Clock pin
+DT                     | 26         | Data pin
+Switch (push)          | 27         | Normally HIGH, INPUT_PULLUP
+
+3. Relays
+----------
+Fan                    | 3          | Active HIGH/LOW depends on module
+Heater                 | 4          | Active HIGH/LOW depends on module
+Humidifier             | 5          | Active HIGH/LOW depends on module
+
+4. Status LEDs
+---------------
+Power LED              | 6          | ON = system powered
+Good LED               | 7          | ON = temp/humidity in range
+Bad LED                | 8          | ON = temp/humidity out of range
+
+5. Float Switch / Safety
+------------------------
+Float switch           | 2          | Input with INPUT_PULLUP
+
+6. I2C Sensor
+---------------
+SHT30                  | SDA/SCL    | Standard I2C, address 0x44
