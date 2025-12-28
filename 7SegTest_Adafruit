@@ -1,0 +1,44 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_LEDBackpack.h>
+
+Adafruit_7segment displays[3];
+uint8_t addresses[3] = {0x70, 0x71, 0x72}; // Change these if your addresses are different
+bool present[3];
+
+void setup() {
+  Serial.begin(9600);
+  while (!Serial); // Wait for serial monitor
+
+  for (int i = 0; i < 3; i++) {
+    displays[i] = Adafruit_7segment();
+    present[i] = displays[i].begin(addresses[i]);
+    if (present[i]) {
+      Serial.print("Display ");
+      Serial.print(i + 1);
+      Serial.println(" found and initialized.");
+      displays[i].setBrightness(15); // Max brightness for testing
+    } else {
+      Serial.print("Display ");
+      Serial.print(i + 1);
+      Serial.println(" not found at address 0x");
+      Serial.println(addresses[i], HEX);
+    }
+  }
+}
+
+void loop() {
+  static int count = 0;
+
+  for (int i = 0; i < 3; i++) {
+    if (present[i]) {
+      displays[i].print(count, DEC);
+      displays[i].writeDisplay();
+    }
+  }
+
+  count++;
+  if (count > 9999) count = 0;
+
+  delay(1000); // Update every second
+}
